@@ -11,7 +11,8 @@ const account = document.querySelector('.account');
 const accountEmail = document.querySelector('#account_email');
 const accountName = document.querySelector('#account_name');
 const error = document.querySelector('#error');
-// const deathRecord = document.querySelector('.death-record');
+const deathRecordWrapper = document.querySelector('.death-record-wrapper');
+
 var firestore = firebase.firestore()
 auth.onAuthStateChanged(user=>
 {
@@ -23,11 +24,12 @@ auth.onAuthStateChanged(user=>
         account.style.display = "block";
         login.style.display = "none";
         signup.style.display = "none";
-        // deathRecord.style.display = "block";
+        deathRecordWrapper.style.display = "block";
         firestore.collection("users").doc(user.uid).get().then((data)=>
         {
             accountName.textContent = data.data().fullName
         })
+       
         accountEmail.textContent = user.email;
         
         
@@ -38,7 +40,7 @@ auth.onAuthStateChanged(user=>
         login.style.display = "block";
     logout.style.display = "none";
     account.style.display = "none";
-    // deathRecord.style.display = "none";
+    deathRecordWrapper.style.display = "none";
 
     }
 });

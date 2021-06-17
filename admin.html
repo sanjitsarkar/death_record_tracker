@@ -82,11 +82,28 @@
       </form>
     </div>
   </div>
-  <div class="col s6 z-depth-12 death-record"
-  style="margin: 2%; background-color: white; display: block;"
+  <div class="col s6 z-depth-12 death-record-wrapper" style="display: none;">
+    <h4>Filter Death Records By</h4>
+  <select id="filter">
+    <option value="isApproved">
+  Approved
+    </option>
+    <option value="isResubmit">
+      Resubmit
+        </option>
+        <option value="pending" selected>
+          Pending
+            </option>
+  </select>
+  <div class="death-record"
+  style="margin: 2%;"
   >
+ 
+
+
 
   </div>
+</div>
   <!-- <div class="col s6 z-depth-12 death-record"
   style="margin: 2%; background-color: white; display: none;"
   >

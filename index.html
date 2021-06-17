@@ -87,7 +87,7 @@
   >
   <h4>Add Death Record</h4>
       <form id="death-record-form">
-        <div class="input-field">
+        <div class="input-field ">
        <p>I hereby certify that the 
          <select name="title">
            <option value="Shri">Shri</option>
@@ -95,8 +95,13 @@
            <option value=".Km">.Km</option>
          </select>
         </div>
-         <input type="text" name="name" id="name" placeholder="Name">
-         <div class="input-field">
+        <div class="input-field ">
+    
+         <input type="text" name="name" id="name" placeholder="Name" required>
+         
+
+         </div>
+         <div class="input-field ">
          <select name="relation">
           <option value="son">son</option>
           <option value="wife">wife</option>
@@ -104,15 +109,47 @@
         </select>
         of
       </div>
-        <input type="text" name="relative_name" id="relative_name" placeholder="Relative name">
-        resident of <input type="text" name="resident" id="resident" placeholder="Resident">
-        was under my treatment from <input type="datetime-local" name="from" id="from" placeholder="From">
-        to <input type="datetime-local" name="to" id="to" placeholder="To">
-        and he/she died on <input type="date" name="date" id="date">
-        at <input type="time" name="time" id="time">
+      <div class="input-field ">
+        <input type="text" name="relative_name" id="relative_name" placeholder="Relative name" required>
+        
+      </div>
+      <div class="input-field ">
+        resident of
      
-        <h6>Resaon of death</h6>
-        <input type="text" name="reason" id="reason" placeholder="Resaon of death">
+        
+        <input type="text" name="resident" id="resident" placeholder="Resident" required>
+        
+      </div>
+      <div class="input-field ">
+        was under my treatment from <input type="datetime-local" name="from" id="from" placeholder="From" required>
+        
+</div>
+<div class="input-field">
+
+        to <input type="datetime-local" name="to" id="to" placeholder="To" required>
+</div>
+<div class="input-field">
+
+        and he/she died on <input type="date" name="date" id="date" required>
+        at <input type="time" name="time" id="time" required>
+</div>
+      
+        <div class="input-field">
+          <input type="text" id="reason" name="reason" required />
+          <label for="reason">Reason of death</label>
+        </div>
+        <div class="input-field">
+          <input type="number" id="age" name="age" required />
+          <label for="age">Age</label>
+        </div>
+        <label>
+          <input class="with-gap" name="sex" type="radio" value="male" checked/>
+          <span>Male</span>
+        </label>
+        <label>
+          <input class="with-gap" name="sex" type="radio"  value="female"/>
+          <span>Female</span>
+        </label>
 
        </p>
        

@@ -1,3 +1,5 @@
+
+
 const deathRecord = document.querySelector('.death-record');
 
 var firestore = firebase.firestore()
@@ -14,13 +16,13 @@ firestore.collection("death_records").get().then((querySnapshot) => {
             <div class="collapsible-header">${doc.data().name}</div>
             <div class="collapsible-body">
               <form id="death-record-form">
-                <div class="input-field">
+                <div class="input-field inline">
                <p>I hereby certify that the 
                 <input type="text" name="title" id="title" value=${doc.data().title} placeholder="Title" maxlength="200"  readonly>
       
                 </div>
                  <input type="text" name="name" id="name" value=${doc.data().name} placeholder="Name" maxlength="200" readonly>
-                 <div class="input-field">
+                 <div class="input-field inline">
                   <input type="text" name="relation" id="relation" value=${doc.data().relation} placeholder="Relation" maxlength="200" readonly>
                 
              
@@ -41,15 +43,62 @@ firestore.collection("death_records").get().then((querySnapshot) => {
                </form>
            
           
-            <button class="btn green darken-2 z-depth-0" value="">Approve</button>
-            <button class="btn red darken-2 z-depth-0" value="">Resubmit</button>
+            <button class="btn green darken-2 z-depth-0 approve" value="" style="display:none">Approve</button>
+            <button class="btn red darken-2 z-depth-0 resubmit" value="" style="display:none">Resubmit</button>
+          
            
             </div>
           </li>
         </ul>`
+   
+    var approve = document.querySelector('.approve')
+    var resubmit = document.querySelector('.resubmit')
+    if(doc.data().isApproved)
+    {
+approve.style.display = "none"
+    }
+    else{
+        approve.style.display = "block"
+
+    }
+    if(doc.data().isResubmit)
+    {
+        resubmit.style.display = "none"
+
+    }
+    else{
+        resubmit.style.display = "block"
         
     }
-    )
+    approve.addEventListener('click',(e)=>
+    { 
+        e.preventDefault()
+
+    firestore.collection("death_records").doc(doc.id).update({
+isApproved:true
+
+    }).then(()=>{}).catch((err)=>
+        {
+        })
+        
+
+    })
+    resubmit.addEventListener('click',(e)=>
+    {
+        e.preventDefault()
+
+        firestore.collection("death_records").doc(doc.id).update({
+isResubmit:true
+
+        }).then(()=>{}).catch((err)=>
+        {
+
+        })
+
+    })
+         
+}
+)
     var elems = document.querySelectorAll('.collapsible');
     var instances = M.Collapsible.init(elems);
 

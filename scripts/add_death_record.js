@@ -12,10 +12,12 @@ deathRecordForm.addEventListener('submit',(e)=> {
   var to = deathRecordForm["to"].value;
   var time = deathRecordForm["time"].value;
   var reason = deathRecordForm["reason"].value;
+  var resident = deathRecordForm["resident"].value;
+  var date = deathRecordForm["date"].value;
   deathRecordFormError.innerHTML="";
 
 //   console.log(title+name+relation+relative_name+from+to+time+reason)
-if(title==="",name==="",relation==="",relative_name==="",from==="",to==="",time==="",reason==="")
+if(title===""||name===""||relation===""||relative_name===""||from===""||to===""||time===""||reason===""||date==="")
 deathRecordFormError.innerHTML="Please don't leave the input field empty.";
 else
 {
@@ -23,7 +25,7 @@ var firestore = firebase.firestore()
 
 
 firestore.collection('death_records').add({
-    title,name,relation,relative_name,from,to,time,reason,
+    title,name,relation,relative_name,from,to,time,reason,resident,date,
     isApproved:false,
     isResubmit:false,
     authUid:auth.currentUser.uid

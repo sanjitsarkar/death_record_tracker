@@ -4,47 +4,54 @@ var firestore = firebase.firestore()
 
 
 firestore.collection("death_records").get().then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-        deathRecord.innerHTML=`
+    var ul = document.createElement('ul')
+    ul.classList=["collapsible"]
+    deathRecord.appendChild(ul)
 
-        <ul class="collapsible">
-          <li>
+  querySnapshot.forEach((doc) => {
+      
+    deathRecord.querySelector('ul').innerHTML+=`<li>
             <div class="collapsible-header">${doc.data().name}</div>
-            <div class="collapsible-body"><span>
+            <div class="collapsible-body">
               <form id="death-record-form">
                 <div class="input-field">
                <p>I hereby certify that the 
-                <input type="text" name="title" id="title" value=${doc.data().title} placeholder="Title" readonly>
+                <input type="text" name="title" id="title" value=${doc.data().title} placeholder="Title" maxlength="200"  readonly>
       
                 </div>
-                 <input type="text" name="name" id="name" value=${doc.data().name} placeholder="Name" readonly>
+                 <input type="text" name="name" id="name" value=${doc.data().name} placeholder="Name" maxlength="200" readonly>
                  <div class="input-field">
-                  <input type="text" name="relation" id="relation" value=${doc.data().relation} placeholder="Relation" readonly>
+                  <input type="text" name="relation" id="relation" value=${doc.data().relation} placeholder="Relation" maxlength="200" readonly>
                 
              
                 
                 of
               </div>
-                <input type="text" name="relative_name" id="relative_name" value=${doc.data().relative_name} placeholder="Relative name" readonly>
-                resident of <input type="text" name="resident" id="resident" value=${doc.data().resident} placeholder="Resident" readonly>
-                was under my treatment from <input type="text" value=${doc.data().from} name="from" id="from" placeholder="From" readonly>
-                to <input type="text" name="to" id="to" value=${doc.data().to} placeholder="To" readonly>
-                and he/she died on <input type="text" name="date" value=${doc.data().date} id="date" readonly>
-                at <input type="text" name="time" value=${doc.data().time} id="time" readonly>
+                <input type="text" name="relative_name" id="relative_name" value=${doc.data().relative_name} placeholder="Relative maxlength="200" name" readonly>
+                resident of <input type="text" name="resident" id="resident" value=${doc.data().resident} placeholder="Resident"maxlength="200"  readonly>
+                was under my treatment from <input type="text" value=${doc.data().from} name="from" id="from" placeholder="From"maxlength="200"  readonly>
+                to <input type="text" name="to" id="to" value=${doc.data().to} placeholder="To" maxlength="200" readonly>
+                and he/she died on <input type="text" name="date" value=${doc.data().date} id="date" maxlength="200" readonly>
+                at <input type="text" name="time" value=${doc.data().time} id="time" maxlength="200" readonly>
              
                 <h6>Resaon of death</h6>
-                <input type="text" name="reason" id="reason" value=${doc.data().reason} placeholder="Resaon of death" readonly>
+                <input type="text" name="reason" id="reason" value=${doc.data().reason} placeholder="Resaon of death" maxlength="200"  readonly>
         
                </p>
-            </span></div>
+               </form>
+           
           
             <button class="btn green darken-2 z-depth-0" value="">Approve</button>
             <button class="btn red darken-2 z-depth-0" value="">Resubmit</button>
            
-          
+            </div>
           </li>
-        </ul>
-        `
-    });
+        </ul>`
+        
+    }
+    )
+    var elems = document.querySelectorAll('.collapsible');
+    var instances = M.Collapsible.init(elems);
+
 });
 

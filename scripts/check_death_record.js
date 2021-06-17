@@ -89,7 +89,7 @@ const content = deathRecord.querySelector('ul')
         console.log(querySnapshot.docs.length)
     querySnapshot.forEach((doc) => {
 
-        content.innerHTML=`<li>
+        content.innerHTML+=`<li>
                 <div class="collapsible-header">${doc.data().name}</div>
                 <div class="collapsible-body">
                   <form id="death-record-form">

@@ -1,0 +1,194 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <title>Death Record</title>
+</head>
+<body class="grey lighten-3">
+<div class="row">
+    <!-- NAVBAR -->
+  <nav class="z-depth-0 grey lighten-4">
+    <div class="nav-wrapper container">
+      
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li class="account" style="display: none;">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-account" >Account</a>
+          </li>
+          <li class="logged-out" style="display: none;">
+            <a href="#" class="grey-text" id="logout">Logout</a>
+          </li>
+         
+          <li class="login" style="display: none;">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-login" >Login</a>
+          </li>
+          <li class="signup" style="display: none;">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-signup" >Sign up</a>
+          </li>
+        
+      </ul>
+    </div>
+  </nav>
+  <!-- <form id="death-record-form"> -->
+    <!-- <div class="input-field">
+      <input type="Person" id="login-email" required />
+      <label for="login-email">Email address</label>
+    </div>
+    <div class="input-field">
+      <input type="password" id="login-password" required />
+      <label for="login-password">Your password</label>
+    </div>
+    <button class="btn yellow darken-2 z-depth-0">Login</button>
+  </form> -->
+  <!-- SIGN UP MODAL -->
+  <div id="modal-signup" class="modal">
+    <div class="modal-content">
+      <h4>Sign up</h4><br />
+      <form id="signup-form">
+        <div class="input-field">
+          <input type="text" id="signup-full-name" required />
+          <label for="signup-full-name">Full Name</label>
+        </div>
+        <div class="input-field">
+          <input type="email" id="signup-email" required />
+          <label for="signup-email">Email address</label>
+        </div>
+        <div class="input-field">
+          <input type="password" id="signup-password" required />
+          <label for="signup-password">Choose password</label>
+        </div>
+        <button class="btn yellow darken-2 z-depth-0">Sign up</button>
+        <p class="error pink-text center-align"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div id="modal-login" class="modal">
+    <div class="modal-content">
+      <h4>Login</h4><br />
+      <form id="login-form">
+        <div class="input-field">
+          <input type="email" id="login-email" required />
+          <label for="login-email">Email address</label>
+        </div>
+        <div class="input-field">
+          <input type="password" id="login-password" required />
+          <label for="login-password">Your password</label>
+        </div>
+        <button class="btn yellow darken-2 z-depth-0">Login</button>
+        <p class="error pink-text center-align" id="error"></p>
+
+      </form>
+    </div>
+  </div>
+  <div class="col s6 z-depth-12 death-record"
+  style="margin: 2%; background-color: white; display: none;"
+  >
+  <h4>Add Death Record</h4>
+  </div>
+  <!-- <div class="col s6 z-depth-12 death-record"
+  style="margin: 2%; background-color: white; display: none;"
+  >
+  <h4>Add Death Record</h4>
+      <form id="death-record-form">
+        <div class="input-field">
+       <p>I hereby certify that the 
+         <select name="title">
+           <option value="Shri">Shri</option>
+           <option value="SMt">Smt</option>
+           <option value=".Km">.Km</option>
+         </select>
+        </div>
+         <input type="text" name="name" id="name" placeholder="Name">
+         <div class="input-field">
+         <select name="relation">
+          <option value="son">son</option>
+          <option value="wife">wife</option>
+          <option value="daughter">daughter</option>
+        </select>
+        of
+      </div>
+        <input type="text" name="relative_name" id="relative_name" placeholder="Relative name">
+        resident of <input type="text" name="resident" id="resident" placeholder="Resident">
+        was under my treatment from <input type="datetime-local" name="from" id="from" placeholder="From">
+        to <input type="datetime-local" name="to" id="to" placeholder="To">
+        and he/she died on <input type="date" name="date" id="date">
+        at <input type="time" name="time" id="time">
+     
+        <h6>Resaon of death</h6>
+        <input type="text" name="reason" id="reason" placeholder="Resaon of death">
+
+       </p>
+       
+        <button class="btn yellow darken-2 z-depth-0">Submit</button>
+        <p class="error pink-text center-align" id="error_death_record_form"></p>
+       
+      </form>
+    </div> -->
+  <!-- ACCOUNT MODAL -->
+  <div id="modal-account" class="modal">
+    <div class="modal-content center-align">
+      <h4>Account details</h4><br />
+      <div class="account-details">
+
+        <h4 id="admin">Admin</h4>
+        <h5 id="account_name"></h5>
+        <h5 id="account_email"></h5>
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+  
+
+
+ <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+ <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
+
+ <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+ <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-analytics.js"></script>
+
+ <!-- Add Firebase products that you want to use -->
+ <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-auth.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-firestore.js"></script>
+ <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyBv0GcidRNM2bJ2mSetucinU7lZC9_w56c",
+      authDomain: "death-record.firebaseapp.com",
+      projectId: "death-record",
+      storageBucket: "death-record.appspot.com",
+      messagingSenderId: "429401247130",
+      appId: "1:429401247130:web:ace04578c3e3c404313e23",
+      measurementId: "G-M7CNJQ6EVT"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+const db = firebase.firestore(); 
+db.settings({timestampsInSnapshots: true });
+  const auth=firebase.auth();
+
+ </script>
+
+
+
+
+
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="scripts/auth_admin.js"></script>
+<script src="scripts/index.js"></script>
+<script src="scripts/check_death_record.js"></script>
+
+  
+
+</div>
+
+</body>
+</html>

@@ -57,6 +57,7 @@ const email = signupForm['signup-email'].value;
 
 const password= signupForm['signup-password'].value;
 const fullName= signupForm['signup-full-name'].value;
+
 error.innerHTML = ""
 // console.log(email+password)
 if(email==="" || password==="" || fullName==="")
@@ -86,12 +87,12 @@ auth.createUserWithEmailAndPassword(email, password).then(cred =>{
         error.innerHTML = err.message
 
     })
-    //close the signup model & reset form
-    const modal= document.querySelector('#model-signup');
-    M.Model.getInstance(modal).close();
+    //close the signup Modal & reset form
+    const modal= document.querySelector('#Modal-signup');
+    M.Modal.getInstance(modal).close();
     signupForm.reset();
     user = auth.currentUser;
-
+  
     
 
 }).catch(err=>
@@ -113,6 +114,7 @@ loginForm.addEventListener('submit',(e)=> {
 const email = loginForm['login-email'].value;
 
 const password= loginForm['login-password'].value;
+    
 // console.log(email+password)
 if(email==="" || password==="")
 {
@@ -123,11 +125,12 @@ auth.signInWithEmailAndPassword(email, password).then(cred =>{
 
     console.log(cred.user);
 
-    //close the signup model & reset form
+    //close the signup Modal & reset form
     const modal= document.querySelector('#modal-login');
-    M.Model.getInstance(modal).close();
+    M.Modal.getInstance(modal).close();
     signupForm.reset();
     user = auth.currentUser;
+
 error.innerHTML = ""
 
 

@@ -63,9 +63,11 @@ if(email==="" || password===""  || fullName==="")
     error.innerHTML = "Please don't keep the input field empty."
 }
 else
+{
 auth.createUserWithEmailAndPassword(email, password).then(cred =>{
-
-    console.log(cred.user);
+   
+    // console.log(cred.user);
+ 
     
     firestore.collection("users").
     doc(cred.user.uid).
@@ -74,11 +76,13 @@ auth.createUserWithEmailAndPassword(email, password).then(cred =>{
         fullName:fullName,
         isAdmin:false
     })
-    //close the signup model & reset form
-    const modal= document.querySelector('#model-signup');
-    M.Model.getInstance(modal).close();
+    //close the signup Modal & reset form
+    const modal= document.querySelector('#Modal-signup');
+    M.Modal.getInstance(modal).close();
     signupForm.reset();
     user = auth.currentUser;
+    
+
     error.innerHTML = ""
 
 }).catch(err=>
@@ -88,10 +92,11 @@ error.innerHTML = err.message
     });
 
 
-
+}
 
 
 });
+
 loginForm.addEventListener('submit',(e)=> {
 
     e.preventDefault();
@@ -108,15 +113,19 @@ if(email==="" || password==="")
     error.innerHTML = "Please don't keep the input field empty."
 }
 else
+{
+    
 auth.signInWithEmailAndPassword(email, password).then(cred =>{
+   
+    // console.log(cred.user);
+  
 
-    console.log(cred.user);
-
-    //close the signup model & reset form
+    //close the signup Modal & reset form
     const modal= document.querySelector('#modal-login');
-    M.Model.getInstance(modal).close();
+    M.Modal.getInstance(modal).close();
     signupForm.reset();
     user = auth.currentUser;
+   
 error.innerHTML = ""
 
 
@@ -126,7 +135,7 @@ error.innerHTML = ""
 error.innerHTML = err.message
     });
 
-
+}
 
 
 

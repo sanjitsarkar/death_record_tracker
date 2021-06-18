@@ -1,6 +1,6 @@
 
 var firestore = firebase.firestore()
-async function init()
+async function initChart()
 {
 
     var querySnapshotMale = await firestore.collection("death_records").where("sex","==","male").get()

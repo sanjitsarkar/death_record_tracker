@@ -12,9 +12,10 @@ const accountEmail = document.querySelector('#account_email');
 const accountName = document.querySelector('#account_name');
 const error = document.querySelector('#error');
 const deathRecordWrapper = document.querySelector('.death-record-wrapper');
-
+const chart = document.querySelector('.death-record-statistics')
 var firestore = firebase.firestore()
-auth.onAuthStateChanged(user=>
+auth.onAuthStateChanged(
+    async(user)=>
 {
  
     if(user)
@@ -24,7 +25,10 @@ auth.onAuthStateChanged(user=>
         account.style.display = "block";
         login.style.display = "none";
         signup.style.display = "none";
+        chart.style.display = "block";
         deathRecordWrapper.style.display = "block";
+        await initChart()
+        await initDeathRecord()
         firestore.collection("users").doc(user.uid).get().then((data)=>
         {
             accountName.textContent = data.data().fullName
@@ -36,6 +40,7 @@ auth.onAuthStateChanged(user=>
        
         
     }else{
+        chart.style.display = "none";
         signup.style.display = "block";
         login.style.display = "block";
     logout.style.display = "none";

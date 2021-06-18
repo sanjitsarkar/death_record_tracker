@@ -83,78 +83,9 @@
     </div>
   </div>
   <div class="col s6 z-depth-12 death-record"
-  style="margin: 2%; background-color: white; display: none;"
+  style="margin: 2%; background-color: white; display: block;"
   >
-  <h4>Add Death Record</h4>
-      <form id="death-record-form">
-        <div class="input-field ">
-       <p>I hereby certify that the 
-         <select name="title">
-           <option value="Shri">Shri</option>
-           <option value="Srimati">Smt</option>
-           <option value="Kumar">.Km</option>
-         </select>
-        </div>
-        <div class="input-field ">
-    
-         <input type="text" name="name" id="name" placeholder="Name" required>
-         </div>
-         <div class="input-field ">
-         <select name="relation">
-          <option value="son">son</option>
-          <option value="wife">wife</option>
-          <option value="daughter">daughter</option>
-        </select>
-        of
-      </div>
-      <div class="input-field ">
-        <input type="text" name="relative_name" id="relative_name" placeholder="Relative name" required>
-        
-      </div>
-      <div class="input-field ">
-        resident of
-     
-        
-        <input type="text" name="resident" id="resident" placeholder="Resident" required>
-        
-      </div>
-      <div class="input-field ">
-        was under my treatment from <input type="datetime-local" name="from" id="from" placeholder="From" required>
-        
-</div>
-<div class="input-field">
-
-        to <input type="datetime-local" name="to" id="to" placeholder="To" required>
-</div>
-<div class="input-field">
-
-        and he/she died on <input type="date" name="date" id="date" required>
-        at <input type="time" name="time" id="time" required>
-</div>
-      
-        <div class="input-field">
-          <input type="text" id="reason" name="reason" required />
-          <label for="reason">Reason of death</label>
-        </div>
-        <div class="input-field">
-          <input type="number" id="age" name="age" required />
-          <label for="age">Age</label>
-        </div>
-        <label>
-          <input class="with-gap" name="sex" type="radio" value="male" checked/>
-          <span>Male</span>
-        </label>
-        <label>
-          <input class="with-gap" name="sex" type="radio"  value="female"/>
-          <span>Female</span>
-        </label>
-
-       </p>
-       
-        <button class="btn yellow darken-2 z-depth-0">Submit</button>
-        <p class="error pink-text center-align" id="error_death_record_form"></p>
-       
-      </form>
+ 
     </div>
   <!-- ACCOUNT MODAL -->
   <div id="modal-account" class="modal">

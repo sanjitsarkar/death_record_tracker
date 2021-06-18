@@ -3,7 +3,7 @@
 
 const deathRecord = document.querySelector('.death-record');
 const filter = document.querySelector('#filter');
-async function init()
+async function initDeathRecord()
 {
 var firestore = firebase.firestore()
 
@@ -162,7 +162,7 @@ const content = deathRecord.querySelector('ul')
         }
         approve.addEventListener('click',(e)=>
         { 
-            e.preventDefault()
+            // e.preventDefault()
     
         firestore.collection("death_records").doc(doc.id).update({
     isApproved:true
@@ -175,7 +175,7 @@ const content = deathRecord.querySelector('ul')
         })
         resubmit.addEventListener('click',(e)=>
         {
-            e.preventDefault()
+            // e.preventDefault()
     
             firestore.collection("death_records").doc(doc.id).update({
     isResubmit:true
@@ -201,4 +201,3 @@ deathRecord?.removeChild(ul)
 
     }
 }
-init()

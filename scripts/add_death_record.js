@@ -3,7 +3,7 @@ const deathRecordFormError = document.querySelector('#error_death_record_form');
 stopLoader()
 deathRecordForm.addEventListener('submit',(e)=> {
     startLoader()
-  e.preventDefault();
+  // e.preventDefault();
   var title = deathRecordForm["title"].value;
   var name = deathRecordForm["name"].value;
   var relation = deathRecordForm["relation"].value;

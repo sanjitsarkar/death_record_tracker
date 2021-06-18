@@ -1,13 +1,29 @@
 async function resubmitForm()
 {
   var deathRecordResubmitForm = document.querySelector('#death-record-resubmit-form');
+
+
+  
 const resubmitBtn = document.querySelector('.resubmit');
   deathRecordResubmitForm.addEventListener('submit',async(e)=> {
-    startLoaderResubmit()
+    // startLoaderResubmit()
+    var title = deathRecordResubmitForm["title"].value;
+  var name = deathRecordResubmitForm["name"].value;
+  var relation = deathRecordResubmitForm["relation"].value;
+  var relative_name = deathRecordResubmitForm["relative_name"].value;
+  var from = deathRecordResubmitForm["from"].value;
+  var to = deathRecordResubmitForm["to"].value;
+  var time = deathRecordResubmitForm["time"].value;
+  var reason = deathRecordResubmitForm["reason"].value;
+  var resident = deathRecordResubmitForm["resident"].value;
+  var date = deathRecordResubmitForm["date"].value;
+  var sex = deathRecordResubmitForm["sex"].value;
+  var age = deathRecordResubmitForm["age"].value;
   e.preventDefault();
   resubmitBtn.disabled = true;
-  
-  firestore.collection('death_records').where('authUid','==',uid).update({
+  console.log(age)
+  console.log(death_record_id)
+  firestore.collection('death_records').doc(death_record_id).update({
     title,name,relation,relative_name,from,to,time,reason,resident,date,age,sex,
     isApproved:false,
     isResubmit:false,

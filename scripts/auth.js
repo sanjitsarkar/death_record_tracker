@@ -16,6 +16,7 @@ const deathRecord = document.querySelector('.death-record');
 // const deathRecordForm = document.querySelector('#death-record-form');
 const resubmitButton = document.querySelector('.submit');
 var uid = "";
+var death_record_id = "";
 var firestore = firebase.firestore()
 auth.onAuthStateChanged(async(user)=>
 {
@@ -31,6 +32,7 @@ auth.onAuthStateChanged(async(user)=>
         
         startLoading()
         var data = await firestore.collection("death_records").where("authUid","==",user.uid).get()
+        death_record_id = data.docs[0].id;
         stopLoading()
         if(data.docs.length){
             deathRecord.style.display = "block";
@@ -309,18 +311,18 @@ const content = deathRecord.querySelector('ul')
                     <input type="text" name="reason" id="reason" value=${doc.data().reason} placeholder="Resaon of death" maxlength="200"  readonly>
                     <h6>Age</h6>
                    
-                    <input type="number" id="age" name="age" value=${doc.data().age} required />
+                    <input type="number" id="age" name="age" value=${doc.data().age} required readonly/>
                     <h6>Sex</h6>
                    
-                    <input type="text" id="sex" name="sex" value=${doc.data().sex} required />
+                    <input type="text" id="sex" name="sex" value=${doc.data().sex} required readonly/>
                  
                     
                    </p>
   
                
               
-                //    <button class="btn green darken-2 z-depth-0 approve" value="" style="display:none">Approve</button>
-                //    <button class="btn red darken-2 z-depth-0 resubmit" value="" style="display:none">Resubmit</button>
+               
+            
                
                    </form>
                 

@@ -93,4 +93,3 @@ function show_age_chart(data)
         }); // end am4core.ready()
 } 
 
-init()

@@ -5,6 +5,8 @@ const deathRecord = document.querySelector('.death-record');
 const filter = document.querySelector('#filter');
 async function initDeathRecord()
 {
+    var modals = document.querySelectorAll('.modal');
+    M.Modal.init(modals);
 var firestore = firebase.firestore()
 
 var querySnapshot
@@ -128,7 +130,7 @@ const content = deathRecord.querySelector('ul')
                
               
                    <button class="btn green darken-2 z-depth-0 approve" value="" style="display:none">Approve</button>
-                   <button class="btn red darken-2 z-depth-0 resubmit" value="" style="display:none">Resubmit</button>
+                   <button class="btn red darken-2 z-depth-0 resubmit modal-trigger"  data-target="modal-resubmit-reason" value="" style="display:none">Resubmit</button>
                
                    </form>
                 
@@ -139,6 +141,8 @@ const content = deathRecord.querySelector('ul')
        
         var approve = document.querySelector('.approve')
         var resubmit = document.querySelector('.resubmit')
+        var resubmit_btn = document.querySelector('.resubmit_btn')
+        var resubmission_reason_form = document.querySelector('#resubmission_reason_form')
       
         if(doc.data().isResubmit)
         {
@@ -162,27 +166,64 @@ const content = deathRecord.querySelector('ul')
         }
         approve.addEventListener('click',(e)=>
         { 
-            // e.preventDefault()
-    
+            e.preventDefault()
+            approve.disabled = true
+            approve.innerHTML = `  <div class="preloader-wrapper small active">
+            <div class="spinner-layer spinner-green-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>`  
         firestore.collection("death_records").doc(doc.id).update({
     isApproved:true
     
-        }).then(()=>{}).catch((err)=>
+        }).then(()=>{
+
+        window.location.reload()
+
+        }).catch((err)=>
             {
+                approve.disabled = false
+                approve.innerHTML = 'APPROVE'
             })
             
     
         })
-        resubmit.addEventListener('click',(e)=>
+        resubmission_reason_form.addEventListener('submit',(e)=>
         {
-            // e.preventDefault()
-    
+            e.preventDefault()
+            var resubmissionReason = document.querySelector('#resubmission_reason').value
+            resubmit_btn.innerHTML = `  <div class="preloader-wrapper small active">
+            <div class="spinner-layer spinner-green-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>`
             firestore.collection("death_records").doc(doc.id).update({
-    isResubmit:true
+    isResubmit:true,
+    resubmissionReason
     
-            }).then(()=>{}).catch((err)=>
+            }).then(()=>{
+                
+                const modal= document.querySelector('#modal-resubmit-reason');
+                M.Modal.getInstance(modal).close();
+                resubmissionReason.value = ""
+                window.location.reload()
+
+            }).catch((err)=>
             {
-    
+                resubmit_btn.disabled = false
+                resubmit_btn.innerHTML = 'Submit'
             })
     
         })

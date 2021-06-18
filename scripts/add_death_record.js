@@ -1,9 +1,47 @@
+async function resubmitForm()
+{
+  var deathRecordResubmitForm = document.querySelector('#death-record-resubmit-form');
+const resubmitBtn = document.querySelector('.resubmit');
+  deathRecordResubmitForm.addEventListener('submit',async(e)=> {
+    startLoaderResubmit()
+  e.preventDefault();
+  resubmitBtn.disabled = true;
+  
+  firestore.collection('death_records').where('authUid','==',uid).update({
+    title,name,relation,relative_name,from,to,time,reason,resident,date,age,sex,
+    isApproved:false,
+    isResubmit:false,
+  
+  }).then((data)=>
+    {
+    // stopLoader()
+        console.log(data)
+        // deathRecordFormError.innerHTML="Success";
+        window.location.reload()
+  
+    }).catch((err)=>
+    { 
+        // stopLoader()
+        // deathRecordFormError.innerHTML=err.message;
+    })
+  
+  
+  })
+}
+async function initForm()
+{
 const deathRecordForm = document.querySelector('#death-record-form');
+const re = document.querySelector('#death-record-form');
+
 const deathRecordFormError = document.querySelector('#error_death_record_form');
-stopLoader()
+const submitBtn = document.querySelector('.submit');
+
+// stopLoader()
+
 deathRecordForm.addEventListener('submit',(e)=> {
     startLoader()
-  // e.preventDefault();
+  e.preventDefault();
+  submitBtn.disabled = true;
   var title = deathRecordForm["title"].value;
   var name = deathRecordForm["name"].value;
   var relation = deathRecordForm["relation"].value;
@@ -19,10 +57,7 @@ deathRecordForm.addEventListener('submit',(e)=> {
   deathRecordFormError.innerHTML="";
 // console.log(sex)
 //   console.log(title+name+relation+relative_name+from+to+time+reason)
-if(title===""||name===""||relation===""||relative_name===""||from===""||to===""||time===""||reason===""||date==="")
-deathRecordFormError.innerHTML="Please don't leave the input field empty.";
-else
-{
+
 var firestore = firebase.firestore()
 
 
@@ -37,19 +72,36 @@ firestore.collection('death_records').add({
     stopLoader()
         console.log(data)
         deathRecordFormError.innerHTML="Success";
+        window.location.reload()
 
     }).catch((err)=>
     { 
         stopLoader()
         deathRecordFormError.innerHTML=err.message;
     })
-}
+
 
 })
 
+
+}
 function startLoader()
 {
-    deathRecordFormError.innerHTML=`  <div class="preloader-wrapper small active">
+    submitBtn.innerHTML=`  <div class="preloader-wrapper small active">
+    <div class="spinner-layer spinner-green-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>`  
+}
+function startLoaderResubmit()
+{
+    resubmitButton.innerHTML=`  <div class="preloader-wrapper small active">
     <div class="spinner-layer spinner-green-only">
       <div class="circle-clipper left">
         <div class="circle"></div>

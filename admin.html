@@ -58,7 +58,7 @@
           <input type="password" id="signup-password" required />
           <label for="signup-password">Choose password</label>
         </div>
-        <button class="btn yellow darken-2 z-depth-0">Sign up</button>
+        <button class="btn yellow darken-2 z-depth-0 signup_btn">Sign up</button>
         <p class="error pink-text center-align"></p>
       </form>
     </div>
@@ -77,10 +77,25 @@
           <input type="password" id="login-password" required />
           <label for="login-password">Your password</label>
         </div>
-        <button class="btn yellow darken-2 z-depth-0">Login</button>
+        <button class="btn yellow darken-2 z-depth-0 login_btn">Login</button>
         <p class="error pink-text center-align" id="error"></p>
 
       </form>
+    </div>
+  </div>
+  <div id="modal-resubmit-reason" class="modal">
+    <div class="modal-content">
+      <h4>Reason for resumbission</h4><br />
+      <form id="resubmission_reason_form">
+        <div class="input-field">
+          <input type="text" id="resubmission_reason" required />
+          <label for="resubmission_reason">Reason</label>
+        </div>
+      
+        <button class="btn yellow darken-2 z-depth-0 resubmit_btn">Submit</button>
+      </form>
+
+    
     </div>
   </div>
 <div class="row">

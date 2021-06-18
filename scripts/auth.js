@@ -15,7 +15,7 @@ const error_resubmit = document.querySelector('#error_resubmit');
 const deathRecord = document.querySelector('.death-record');
 // const deathRecordForm = document.querySelector('#death-record-form');
 const resubmitButton = document.querySelector('.submit');
-
+var uid = "";
 var firestore = firebase.firestore()
 auth.onAuthStateChanged(async(user)=>
 {
@@ -23,10 +23,12 @@ auth.onAuthStateChanged(async(user)=>
     if(user)
     {
         console.log(user)
+        uid = user.uid
         logout.style.display = "block";
         account.style.display = "block";
         login.style.display = "none";
         signup.style.display = "none";
+        
         startLoading()
         var data = await firestore.collection("death_records").where("authUid","==",user.uid).get()
         stopLoading()
@@ -51,14 +53,71 @@ setUI(data)
         else{
        
 // console.log("elese")
+
 setResubmitFormUI()
+var deathRecordResubmitForm = document.querySelector('#death-record-resubmit-form');
+
+var title = deathRecordResubmitForm["title"];
+  var name = deathRecordResubmitForm["name"];
+  var relation = deathRecordResubmitForm["relation"];
+  var relative_name = deathRecordResubmitForm["relative_name"];
+  var from = deathRecordResubmitForm["from"];
+  var to = deathRecordResubmitForm["to"];
+  var time = deathRecordResubmitForm["time"];
+  var reason = deathRecordResubmitForm["reason"];
+  var resident = deathRecordResubmitForm["resident"];
+  var date = deathRecordResubmitForm["date"];
+  var sex = deathRecordResubmitForm["sex"];
+  var age = deathRecordResubmitForm["age"];
+  var resubmission_reason = document.querySelector('#error_death_record_form')
+  // deathRecordFormError.innerHTML="";
+  // console.log(sex)
+  //   console.log(title+name+relation+relative_name+from+to+time+reason)
+  
+  
+  var data = await firestore.collection("death_records").where('authUid','==',uid).get()
+  data = data.docs[0].data()
+  name.value = data.name
+  relation.value = data.relation
+  relative_name.value = data.relative_name
+  from.value = data.from
+  to.value = data.to
+  reason.value = data.reason
+  resident.value = data.resident
+  date.value = data.date
+  time.value = data.time
+  sex.value = data.sex
+  age.value = data.age
+  var titleSelect = document.getElementById('title');
+for(var i, j = 0; i = titleSelect.options[j]; j++) {
+    if(i.value == titleSelect.value) {
+        titleSelect.selectedIndex = j;
+        
+M.FormSelect.init(titleSelect); 
+        break;
+    }
+}
+    var relationSelect = document.getElementById('relation');
+    // console.log(relationSelect.value)
+
+    for(var i, j = 0; i = relationSelect.options[j]; j++) {
+        if(i.value == relationSelect.value) {
+           
+            relationSelect.selectedIndex = j;
+            M.FormSelect.init(relationSelect); 
+            break;
+        }
+    }
+
+  resubmission_reason.textContent = `Reason for resubmission: ${data.resubmissionReason}`
+  resubmitForm()
         }
         }
         else
         {
         deathRecord.style.display = "block";
 setFormUI()
-
+initForm()
         }
         firestore.collection("users").doc(user.uid).get().then((data)=>
         {
@@ -86,7 +145,17 @@ logoutButton.addEventListener('click',()=>
 signupForm.addEventListener('submit',(e)=> {
 
     e.preventDefault();
-
+    document.querySelector('.signup_btn').innerHTML=`<div class="preloader-wrapper small active">
+    <div class="spinner-layer spinner-green-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+    </div>` 
 //get user info
 const email = signupForm['signup-email'].value;
 
@@ -95,12 +164,7 @@ const fullName= signupForm['signup-full-name'].value;
 // console.log(email+password)
 
 // signup the user
-if(email==="" || password===""  || fullName==="")
-{
-    error.innerHTML = "Please don't keep the input field empty."
-}
-else
-{
+
 auth.createUserWithEmailAndPassword(email, password).then(cred =>{
    
     // console.log(cred.user);
@@ -130,7 +194,7 @@ error.innerHTML = err.message
     });
 
 
-}
+
 
 
 });
@@ -138,7 +202,17 @@ error.innerHTML = err.message
 loginForm.addEventListener('submit',(e)=> {
 
     e.preventDefault();
-
+document.querySelector('.login_btn').innerHTML=`<div class="preloader-wrapper small active">
+<div class="spinner-layer spinner-green-only">
+  <div class="circle-clipper left">
+    <div class="circle"></div>
+  </div><div class="gap-patch">
+    <div class="circle"></div>
+  </div><div class="circle-clipper right">
+    <div class="circle"></div>
+  </div>
+</div>
+</div>`  
 //get user info
 const email = loginForm['login-email'].value;
 
@@ -146,12 +220,7 @@ const password= loginForm['login-password'].value;
 // console.log(email+password)
 
 // signup the user
-if(email==="" || password==="")
-{
-    error.innerHTML = "Please don't keep the input field empty."
-}
-else
-{
+
 
 auth.signInWithEmailAndPassword(email, password).then(cred =>{
    
@@ -173,7 +242,6 @@ error.innerHTML = ""
 error.innerHTML = err.message
     });
 
-}
 
 
 
@@ -251,8 +319,8 @@ const content = deathRecord.querySelector('ul')
   
                
               
-                   <button class="btn green darken-2 z-depth-0 approve" value="" style="display:none">Approve</button>
-                   <button class="btn red darken-2 z-depth-0 resubmit" value="" style="display:none">Resubmit</button>
+                //    <button class="btn green darken-2 z-depth-0 approve" value="" style="display:none">Approve</button>
+                //    <button class="btn red darken-2 z-depth-0 resubmit" value="" style="display:none">Resubmit</button>
                
                    </form>
                 
@@ -280,12 +348,15 @@ deathRecord?.removeChild(ul)
 
 function setResubmitFormUI()
 {
+    
     deathRecord.style.display = "block";
     deathRecord.innerHTML = ` <h4>Resubmit Death Record</h4>
-    <form id="death-record-form">
+    <p class="error pink-text center-align" id="error_death_record_form"></p>
+
+    <form id="death-record-resubmit-form">
       <div class="input-field ">
      <p>I hereby certify that the 
-       <select name="title">
+       <select name="title" id="title">
          <option value="Shri">Shri</option>
          <option value="Srimati">Smt</option>
          <option value="Kumar">.Km</option>
@@ -296,7 +367,7 @@ function setResubmitFormUI()
        <input type="text" name="name" id="name" placeholder="Name" required>
        </div>
        <div class="input-field ">
-       <select name="relation">
+       <select name="relation" id="relation">
         <option value="son">son</option>
         <option value="wife">wife</option>
         <option value="daughter">daughter</option>
@@ -329,12 +400,10 @@ function setResubmitFormUI()
 </div>
     
       <div class="input-field">
-        <input type="text" id="reason" name="reason" required />
-        <label for="reason">Reason of death</label>
+        <input type="text" id="reason" name="reason" required placeholder="Reason of death"/>
       </div>
       <div class="input-field">
-        <input type="number" id="age" name="age" required />
-        <label for="age">Age</label>
+        <input type="number" id="age" name="age" required placeholder="Age"/>
       </div>
       <label>
         <input class="with-gap" name="sex" type="radio" value="male" checked/>
@@ -348,13 +417,15 @@ function setResubmitFormUI()
      </p>
      
       <button class="btn yellow darken-2 z-depth-0 resubmit">Resubmit</button>
-      <p class="error pink-text center-align" id="error_death_record_form"></p>
       <p class="error pink-text center-align" id="error_resubmit">Please resubmit the form with correct details</p>
      
     </form>`
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
 }
 function setFormUI()
 {
+    
     deathRecord.style.display = "block";
     deathRecord.innerHTML = ` <h4>Add Death Record</h4>
     <form id="death-record-form">
@@ -422,9 +493,11 @@ function setFormUI()
 
      </p>
      
-      <button class="btn yellow darken-2 z-depth-0 resubmit">Submit</button>
+      <button class="btn yellow darken-2 z-depth-0 submit">Submit</button>
       <p class="error pink-text center-align" id="error_death_record_form"></p>
   
      
     </form>`
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
 }

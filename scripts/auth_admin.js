@@ -54,9 +54,19 @@ logoutButton.addEventListener('click',()=>
     auth.signOut();
 })
 signupForm.addEventListener('submit',(e)=> {
-
+    document.querySelector('.signup_btn').disabled = true
     e.preventDefault();
-
+    document.querySelector('.signup_btn').innerHTML=`<div class="preloader-wrapper small active">
+    <div class="spinner-layer spinner-green-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+    </div>` 
 //get user info
 const email = signupForm['signup-email'].value;
 
@@ -65,11 +75,7 @@ const fullName= signupForm['signup-full-name'].value;
 
 error.innerHTML = ""
 // console.log(email+password)
-if(email==="" || password==="" || fullName==="")
-{
-    error.innerHTML = "Please don't keep the input field empty."
-}
-else{
+
 // signup the user
 auth.createUserWithEmailAndPassword(email, password).then(cred =>{
 
@@ -90,10 +96,12 @@ auth.createUserWithEmailAndPassword(email, password).then(cred =>{
 
     }).catch((err)=>
     {
+        
         error.innerHTML = err.message
 
     })
     //close the signup Modal & reset form
+    
     const modal= document.querySelector('#Modal-signup');
     M.Modal.getInstance(modal).close();
     signupForm.reset();
@@ -104,30 +112,40 @@ auth.createUserWithEmailAndPassword(email, password).then(cred =>{
 }).catch(err=>
     {
         // console.log(err.message)
+    document.querySelector('.signup_btn').disabled = false
+
+        document.querySelector('.signup_btn').innerHTML = 'Signup'
+
 error.innerHTML = err.message
     });
-}
+
 
 
 
 
 });
 loginForm.addEventListener('submit',(e)=> {
+    document.querySelector('.login_btn').disabled = true
 
     e.preventDefault();
-
+    document.querySelector('.login_btn').innerHTML=`<div class="preloader-wrapper small active">
+    <div class="spinner-layer spinner-green-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+    </div>` 
 //get user info
 const email = loginForm['login-email'].value;
 
 const password= loginForm['login-password'].value;
     
 // console.log(email+password)
-if(email==="" || password==="")
-{
-    error.innerHTML = "Please don't keep the input field empty."
-}
-else
-{
+
     // firestore.collection("users").where()
 auth.signInWithEmailAndPassword(email, password).then(cred =>{
 
@@ -144,10 +162,14 @@ error.innerHTML = ""
 
 }).catch(err=>
     {
+
+    document.querySelector('.login_btn').disabled = false
+
+        document.querySelector('.login_btn').innerHTML = 'Login'
         console.log(err.message)
 error.innerHTML = err.message
     });
-}
+
 
 
 

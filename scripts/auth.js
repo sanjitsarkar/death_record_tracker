@@ -74,6 +74,7 @@ auth.createUserWithEmailAndPassword(email, password).then(cred =>{
     set({
         
         fullName:fullName,
+        email:email,
         isAdmin:false
     })
     //close the signup Modal & reset form
@@ -114,7 +115,7 @@ if(email==="" || password==="")
 }
 else
 {
-    
+
 auth.signInWithEmailAndPassword(email, password).then(cred =>{
    
     // console.log(cred.user);

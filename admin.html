@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
     <title>Death Record</title>
 </head>
 <body class="grey lighten-3">
@@ -82,6 +83,8 @@
       </form>
     </div>
   </div>
+<div class="row">
+  
   <div class="col s6 z-depth-12 death-record-wrapper" style="display: none;">
     <h4>Filter Death Records By</h4>
   <select id="filter">
@@ -102,6 +105,28 @@
 
 
 
+  </div>
+</div>
+<div class="col s6 z-depth-12 death-record-statistics" style="display: block;">
+  <style>
+    #chartdiv_sex,#chartdiv_age {
+      width: 100%;
+      
+      height: 500px;
+    }
+    
+    </style>
+    
+    <!-- Resources -->
+   
+    <!-- Chart code -->
+ 
+    <h4 style="text-align: center;">Sex Ratio</h4>
+    <!-- HTML -->
+    <div id="chartdiv_sex"></div>
+    <h4 style="text-align: center;">Age Wise</h4>
+    <!-- HTML -->
+    <div id="chartdiv_age"></div>
   </div>
 </div>
   <!-- <div class="col s6 z-depth-12 death-record"
@@ -162,7 +187,6 @@
 
   
 
-
  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
  <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
 
@@ -192,7 +216,10 @@ db.settings({timestampsInSnapshots: true });
  </script>
 
 
-
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+<script src="scripts/show_chart.js"></script>
 
 
 

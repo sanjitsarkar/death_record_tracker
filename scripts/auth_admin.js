@@ -77,6 +77,7 @@ auth.createUserWithEmailAndPassword(email, password).then(cred =>{
     doc(cred.user.uid).
     set({
         fullName:fullName,
+        email:email,
         isAdmin:true
     }).then((data)=>
     {
@@ -121,6 +122,8 @@ if(email==="" || password==="")
     error.innerHTML = "Please don't keep the input field empty."
 }
 else
+{
+    // firestore.collection("users").where()
 auth.signInWithEmailAndPassword(email, password).then(cred =>{
 
     console.log(cred.user);
@@ -139,7 +142,7 @@ error.innerHTML = ""
         console.log(err.message)
 error.innerHTML = err.message
     });
-
+}
 
 
 

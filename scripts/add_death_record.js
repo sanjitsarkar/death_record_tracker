@@ -18,11 +18,11 @@ const resubmitBtn = document.querySelector('.resubmit');
   var resident = deathRecordResubmitForm["resident"].value;
   var date = deathRecordResubmitForm["date"].value;
   var sex = deathRecordResubmitForm["sex"].value;
-  var age = deathRecordResubmitForm["age"].value;
+  var age = parseInt(deathRecordResubmitForm["age"].value);
   e.preventDefault();
   resubmitBtn.disabled = true;
-  console.log(age)
-  console.log(death_record_id)
+  // console.log(age)
+  // console.log(death_record_id)
   firestore.collection('death_records').doc(death_record_id).update({
     title,name,relation,relative_name,from,to,time,reason,resident,date,age,sex,
     isApproved:false,

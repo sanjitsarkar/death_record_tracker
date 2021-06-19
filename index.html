@@ -6,7 +6,9 @@
     <title>Death Record</title>
 </head>
 <body class="grey lighten-3">
-<div class="row">
+
+
+  
     <!-- NAVBAR -->
   <nav class="z-depth-0 grey lighten-4">
     <div class="nav-wrapper container">
@@ -29,6 +31,7 @@
       </ul>
     </div>
   </nav>
+  <div class="row">
   <!-- <form id="death-record-form"> -->
     <!-- <div class="input-field">
       <input type="Person" id="login-email" required />
@@ -41,6 +44,19 @@
     <button class="btn yellow darken-2 z-depth-0">Login</button>
   </form> -->
   <!-- SIGN UP MODAL -->
+  <div class="col s12 valign-wrapper">
+  <div class="preloader-wrapper big active preloader " >
+    <div class="spinner-layer spinner-green-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+    </div>
+  </div>
   <div id="modal-signup" class="modal">
     <div class="modal-content">
       <h4>Sign up</h4><br />
@@ -100,7 +116,7 @@
   </div>
 
 
-
+</div>
   
 
 
@@ -146,7 +162,6 @@ db.settings({timestampsInSnapshots: true });
 
   
 
-</div>
 
 </body>
 </html>

@@ -15,14 +15,25 @@ const error_resubmit = document.querySelector('#error_resubmit');
 const deathRecord = document.querySelector('.death-record');
 // const deathRecordForm = document.querySelector('#death-record-form');
 const resubmitButton = document.querySelector('.submit');
+const preloader = document.querySelector('.preloader')
 var uid = "";
 var death_record_id = "";
 var firestore = firebase.firestore()
+function startPreLoading()
+{
+  preloader.style.display="block"
+}
+function stopPreLoading()
+{
+  preloader.style.display="none"
+}
+startPreLoading()
 auth.onAuthStateChanged(async(user)=>
 {
- 
+  stopPreLoading()
+
     if(user)
-    {
+    { 
         console.log(user)
         uid = user.uid
         logout.style.display = "block";

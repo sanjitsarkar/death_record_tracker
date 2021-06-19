@@ -13,11 +13,22 @@ const accountName = document.querySelector('#account_name');
 const error = document.querySelector('#error');
 const deathRecordWrapper = document.querySelector('.death-record-wrapper');
 const chart = document.querySelector('.death-record-statistics')
+const preloader = document.querySelector('.preloader')
+
 var firestore = firebase.firestore()
+function startPreLoading()
+{
+  preloader.style.display="block"
+}
+function stopPreLoading()
+{
+  preloader.style.display="none"
+}
+startPreLoading()
 auth.onAuthStateChanged(
     async(user)=>
 {
- 
+ stopPreLoading()
     if(user)
     {
         console.log(user)

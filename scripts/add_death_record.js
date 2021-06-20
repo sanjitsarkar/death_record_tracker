@@ -1,48 +1,50 @@
 async function resubmitForm()
 {
-//   var deathRecordResubmitForm = document.querySelector('#death-record-resubmit-form');
+  var deathRecordResubmitForm = document.querySelector('#death-record-resubmit-form');
 
 
   
-// const resubmitBtn = document.querySelector('.resubmit');
-//   deathRecordResubmitForm.addEventListener('submit',async(e)=> {
-//     // startLoaderResubmit()
-//     var title = deathRecordResubmitForm["title"].value;
-//   var name = deathRecordResubmitForm["name"].value;
-//   var relation = deathRecordResubmitForm["relation"].value;
-//   var relative_name = deathRecordResubmitForm["relative_name"].value;
-//   var from = deathRecordResubmitForm["from"].value;
-//   var to = deathRecordResubmitForm["to"].value;
-//   var time = deathRecordResubmitForm["time"].value;
-//   var reason = deathRecordResubmitForm["reason"].value;
-//   var resident = deathRecordResubmitForm["resident"].value;
-//   var date = deathRecordResubmitForm["date"].value;
-//   var sex = deathRecordResubmitForm["sex"].value;
-//   var age = parseInt(deathRecordResubmitForm["age"].value);
-//   e.preventDefault();
-//   resubmitBtn.disabled = true;
-//   // console.log(age)
-//   // console.log(death_record_id)
-//   firestore.collection('death_records').doc(death_record_id).update({
-//     title,name,relation,relative_name,from,to,time,reason,resident,date,age,sex,
-//     isApproved:false,
-//     isResubmit:false,
+const resubmitBtn = document.querySelector('.resubmit');
+  deathRecordResubmitForm.addEventListener('submit',async(e)=> {
+    // startLoaderResubmit()
+    var title = deathRecordResubmitForm["title"].value;
+  var name = deathRecordResubmitForm["name"].value;
+  var relation = deathRecordResubmitForm["relation"].value;
+  var relative_name = deathRecordResubmitForm["relative_name"].value;
+  var from = deathRecordResubmitForm["from"].value;
+  var to = deathRecordResubmitForm["to"].value;
+  var time = deathRecordResubmitForm["time"].value;
+  var reason = deathRecordResubmitForm["reason"].value;
+  var resident = deathRecordResubmitForm["resident"].value;
+  var date = deathRecordResubmitForm["date"].value;
+  var sex = deathRecordResubmitForm["sex"].value;
+  var age = parseInt(deathRecordResubmitForm["age"].value);
+  e.preventDefault();
+  resubmitBtn.disabled = true;
+  // console.log(age)
+  // console.log(death_record_id)
+
+  //Update the death record having document id as death_record_id
+  firestore.collection('death_records').doc(death_record_id).update({
+    title,name,relation,relative_name,from,to,time,reason,resident,date,age,sex,
+    isApproved:false,
+    isResubmit:false,
   
-//   }).then((data)=>
-//     {
-//     // stopLoader()
-//         console.log(data)
-//         // deathRecordFormError.innerHTML="Success";
-//         window.location.reload()
+  }).then((data)=>
+    {
+    // stopLoader()
+        console.log(data)
+        // deathRecordFormError.innerHTML="Success";
+        window.location.reload()
   
-//     }).catch((err)=>
-//     { 
-//         // stopLoader()
-//         // deathRecordFormError.innerHTML=err.message;
-//     })
+    }).catch((err)=>
+    { 
+        // stopLoader()
+        // deathRecordFormError.innerHTML=err.message;
+    })
   
   
-//   })
+  })
 }
 async function initForm()
 {
@@ -88,7 +90,7 @@ submitButton.disabled = true;
 
 var firestore = firebase.firestore()
 
-
+  //Add the death record details
 firestore.collection('death_records').add({
     title,name,relation,relative_name,from,to,time,reason,resident,date,age,sex,
     isApproved:false,

@@ -19,19 +19,22 @@ const preloader = document.querySelector('.preloader')
 var uid = "";
 var death_record_id = "";
 var firestore = firebase.firestore()
+//This method is called on page load  and shows loading icon until dara is completely fetched from database.
 function startPreLoading()
 {
   preloader.style.display="block"
 }
+//This method is is called on page load.
 function stopPreLoading()
 {
   preloader.style.display="none"
 }
 startPreLoading()
+//This is callbak function which triggers on user signin, signup and logout.
 auth.onAuthStateChanged(async(user)=>
 {
   stopPreLoading()
-
+//When user is logged in or signed in.
     if(user)
     { 
         console.log(user)
@@ -40,33 +43,41 @@ auth.onAuthStateChanged(async(user)=>
         account.style.display = "block";
         login.style.display = "none";
         signup.style.display = "none";
-        
+        //Displays loading icon.
         startLoading()
+        //Fetch data about death records created by logged in user.
         var data = await firestore.collection("death_records").where("authUid","==",user.uid).get()
+        //If data is not empty, then store the id of the respective death record todeath_record_id variable
         death_record_id = data?.docs[0]?.id;
         stopLoading()
+        //If there exist any documnets
         if(data.docs.length){
             deathRecord.style.display = "block";
+        //If the record has isApproved field as true
         if(data.docs[0].data().isApproved)
         {
             var title = document.createElement('h5')
             title.textContent = "Record is approved"
             deathRecord.appendChild(title)
+            //Set the UI for data(death record details) to load
 setUI(data)
 
         }
+        //If the record has both isApproved and isResubmit fields as false that means The record is still need approval or pending for approval.
+
         else if(data.docs[0].data().isApproved==false && data.docs[0].data().isResubmit==false)
         {
             var title = document.createElement('h5')
             title.textContent = "Record is pending for approval"
             deathRecord.appendChild(title)
+            //Set the UI for data(death record details) to load
+
             setUI(data)
 
         }
         else{
-       
-// console.log("elese")
 
+//Else Set The Resubmit Form UI
 setResubmitFormUI()
 var deathRecordResubmitForm = document.querySelector('#death-record-resubmit-form');
 
@@ -87,7 +98,7 @@ var title = deathRecordResubmitForm["title"];
   // console.log(sex)
   //   console.log(title+name+relation+relative_name+from+to+time+reason)
   
-  
+  //Fetch all the death records created or stored by the logged in user
   var data = await firestore.collection("death_records").where('authUid','==',uid).get()
   data = data.docs[0].data()
   name.value = data.name
@@ -102,6 +113,7 @@ var title = deathRecordResubmitForm["title"];
   sex.value = data.sex
   age.value = data.age
   var titleSelect = document.getElementById('title');
+
 for(var i, j = 0; i = titleSelect.options[j]; j++) {
     if(i.value == titleSelect.value) {
         titleSelect.selectedIndex = j;
@@ -121,17 +133,22 @@ M.FormSelect.init(titleSelect);
             break;
         }
     }
-
+//Set the resubmission reason
   resubmission_reason.textContent = `Reason for resubmission: ${data.resubmissionReason}`
+  //Initialise the death record resubmit form submitting function
   resubmitForm()
         }
         }
         else
         {
         deathRecord.style.display = "block";
+      //If there is no death record is created or stored by the logged in user
+      //Then set the add death record details form
 setFormUI()
+  //Initialise the death record form submitting function
 initForm()
         }
+        //Feth user details from `users` collection and set those details to UI elements.
         var data = await firestore.collection("users").doc(uid).get()
         console.log(uid+data?.data())
         accountName.textContent = data?.data()?.fullName
@@ -143,6 +160,7 @@ initForm()
        
         
     }else{
+      //If No user is logged in or signed up or logged out
         signup.style.display = "block";
         login.style.display = "block";
     logout.style.display = "none";
@@ -151,10 +169,12 @@ initForm()
 
     }
 });
+//Sign out method
 logoutButton.addEventListener('click',()=>
 {
     auth.signOut();
 })
+//It triggers when ever user submits the signupForm.
 signupForm.addEventListener('submit',async(e)=> {
 var signup_error = document.querySelector('#signup_error')
     e.preventDefault();
@@ -179,11 +199,13 @@ const fullName= signupForm['signup-full-name'].value;
 
 // signup the user
 
+//It's a firebase predefined function to create an account with email and password as credentials.
+
 auth.createUserWithEmailAndPassword(email, password).then(async(cred) =>{
    
     // console.log(cred.user);
  
-    
+    //After creating an account this fuction stores the user's info like name and uid(Unique Id) to Firestore.
     await firestore.collection("users").
     doc(cred.user.uid).
     set({
@@ -218,6 +240,7 @@ auth.createUserWithEmailAndPassword(email, password).then(async(cred) =>{
 
 
 });
+//It triggers when ever user submits the signupForm.
 
 loginForm.addEventListener('submit',(e)=> {
 
@@ -238,10 +261,8 @@ document.querySelector('.login_btn').innerHTML=`<div class="preloader-wrapper sm
 const email = loginForm['login-email'].value;
 
 const password= loginForm['login-password'].value;
-// console.log(email+password)
 
-// signup the user
-
+//It's a firebase predefined function to sign in with email and password as credentials.
 
 auth.signInWithEmailAndPassword(email, password).then(cred =>{
    
@@ -275,7 +296,7 @@ error.innerHTML = err.message
 
 });
 
-
+// It loads until the death record info is fetched from death_records collection.
 function startLoading()
 {   
     console.log("Loading")
@@ -296,6 +317,7 @@ function stopLoading()
     
     deathRecord.innerHTML = ``  
 }
+
 function setUI(querySnapshot)
 {
    
@@ -303,10 +325,10 @@ var ul = document.createElement('ul')
 ul.classList=["collapsible"]
 deathRecord.appendChild(ul)
 const content = deathRecord.querySelector('ul')
-
+//If there exists data queried from database
     if(querySnapshot.docs.length)
     {
-        // console.log(querySnapshot.docs.length)
+       //Iterate through data.
     querySnapshot.forEach((doc) => {
 
         content.innerHTML+=`<li>
@@ -367,6 +389,7 @@ const content = deathRecord.querySelector('ul')
     });
 }
     else{
+      //If there is nothing found after quering database.
         var ul = deathRecord.querySelector('ul')
 deathRecord?.removeChild(ul)
         deathRecord.innerHTML = `<h5>Not Available</h5>`  

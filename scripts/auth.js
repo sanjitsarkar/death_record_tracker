@@ -43,7 +43,7 @@ auth.onAuthStateChanged(async(user)=>
         
         startLoading()
         var data = await firestore.collection("death_records").where("authUid","==",user.uid).get()
-        death_record_id = data.docs[0].id;
+        death_record_id = data?.docs[0]?.id;
         stopLoading()
         if(data.docs.length){
             deathRecord.style.display = "block";
@@ -132,10 +132,10 @@ M.FormSelect.init(titleSelect);
 setFormUI()
 initForm()
         }
-        firestore.collection("users").doc(user.uid).get().then((data)=>
-        {
-            accountName.textContent = data.data().fullName
-        })
+        var data = await firestore.collection("users").doc(uid).get()
+        console.log(uid+data?.data())
+        accountName.textContent = data?.data()?.fullName
+        
         
         accountEmail.textContent = user.email;
         
@@ -155,9 +155,10 @@ logoutButton.addEventListener('click',()=>
 {
     auth.signOut();
 })
-signupForm.addEventListener('submit',(e)=> {
-
+signupForm.addEventListener('submit',async(e)=> {
+var signup_error = document.querySelector('#signup_error')
     e.preventDefault();
+    document.querySelector('.signup_btn').innerHTML.disabled = true
     document.querySelector('.signup_btn').innerHTML=`<div class="preloader-wrapper small active">
     <div class="spinner-layer spinner-green-only">
       <div class="circle-clipper left">
@@ -178,12 +179,12 @@ const fullName= signupForm['signup-full-name'].value;
 
 // signup the user
 
-auth.createUserWithEmailAndPassword(email, password).then(cred =>{
+auth.createUserWithEmailAndPassword(email, password).then(async(cred) =>{
    
     // console.log(cred.user);
  
     
-    firestore.collection("users").
+    await firestore.collection("users").
     doc(cred.user.uid).
     set({
         
@@ -194,16 +195,22 @@ auth.createUserWithEmailAndPassword(email, password).then(cred =>{
     //close the signup Modal & reset form
     const modal= document.querySelector('#Modal-signup');
     M.Modal.getInstance(modal).close();
+    document.querySelector('.signup_btn').innerHTML.disabled = false
+
     signupForm.reset();
     user = auth.currentUser;
     
+    document.querySelector('.signup_btn').innerHTML = "Signup"
 
-    error.innerHTML = ""
+    signup_error.innerHTML = ""
 
 }).catch(err=>
     {
+    document.querySelector('.signup_btn').innerHTML.disabled = true
+    document.querySelector('.signup_btn').innerHTML = "Signup"
+
         console.log(err.message)
-error.innerHTML = err.message
+        signup_error.innerHTML = err.message
     });
 
 
@@ -215,6 +222,7 @@ error.innerHTML = err.message
 loginForm.addEventListener('submit',(e)=> {
 
     e.preventDefault();
+    document.querySelector('.login_btn').disabled = true
 document.querySelector('.login_btn').innerHTML=`<div class="preloader-wrapper small active">
 <div class="spinner-layer spinner-green-only">
   <div class="circle-clipper left">
@@ -242,16 +250,23 @@ auth.signInWithEmailAndPassword(email, password).then(cred =>{
 
     //close the signup Modal & reset form
     const modal= document.querySelector('#modal-login');
+    
     M.Modal.getInstance(modal).close();
-    signupForm.reset();
+    document.querySelector('.login_btn').disabled = false
+
+    loginForm.reset();
     user = auth.currentUser;
    
 error.innerHTML = ""
-
+document.querySelector('.login_btn').innerHTML = "Login"
 
 }).catch(err=>
     {
         console.log(err.message)
+    document.querySelector('.login_btn').disabled = false
+
+document.querySelector('.login_btn').innerHTML = "Login"
+
 error.innerHTML = err.message
     });
 
@@ -263,7 +278,7 @@ error.innerHTML = err.message
 
 function startLoading()
 {   
-    
+    console.log("Loading")
     deathRecord.innerHTML = `  <div class="preloader-wrapper small active">
     <div class="spinner-layer spinner-green-only">
       <div class="circle-clipper left">
@@ -506,7 +521,7 @@ function setFormUI()
 
      </p>
      
-      <button class="btn yellow darken-2 z-depth-0 submit">Submit</button>
+      <button class="btn yellow darken-2 z-depth-0" id="submit">Submit</button>
       <p class="error pink-text center-align" id="error_death_record_form"></p>
   
      

@@ -117,7 +117,9 @@ auth.createUserWithEmailAndPassword(email, password).then(cred =>{
     M.Modal.getInstance(modal).close();
     signupForm.reset();
     user = auth.currentUser;
-  
+    document.querySelector('.signup_btn').disabled = false
+    
+    document.querySelector('.signup_btn').innerHTML="Signup"
     
 
 }).catch(err=>
@@ -165,8 +167,11 @@ auth.signInWithEmailAndPassword(email, password).then(cred =>{
     //close the signup Modal & reset form
     const modal= document.querySelector('#modal-login');
     M.Modal.getInstance(modal).close();
-    signupForm.reset();
+    loginForm.reset();
     user = auth.currentUser;
+    document.querySelector('.login_btn').disabled = false
+
+    document.querySelector('.login_btn').innerHTML = 'Login'
 
 error.innerHTML = ""
 

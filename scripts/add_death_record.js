@@ -23,7 +23,20 @@ const resubmitBtn = document.querySelector('.resubmit');
   resubmitBtn.disabled = true;
   // console.log(age)
   // console.log(death_record_id)
-
+  reason = reason.toLowerCase()
+  resident = resident.toLowerCase()
+  
+  var firestore = firebase.firestore()
+  var data_reason = await firestore.collection("reasons").where("reason","==",reason).get()
+  var data_resident = await firestore.collection("residents").where("resident","==",resident).get()
+  if(data_reason.docs.length == 0)
+  {
+   await firestore.collection("reasons").add({reason})
+  }
+  if(data_resident.docs.length == 0)
+  {
+        await firestore.collection("residents").add({resident})
+  }
   //Update the death record having document id as death_record_id
   firestore.collection('death_records').doc(death_record_id).update({
     title,name,relation,relative_name,from,to,time,reason,resident,date,age,sex,
@@ -55,7 +68,7 @@ const submitButton = document.querySelector('#submit');
 
 // stopLoader()
 
-deathRecordForm.addEventListener('submit',(e)=> {
+deathRecordForm.addEventListener('submit',async(e)=> {
     // startLoader()
     document.querySelector('#submit').innerHTML=`<div class="preloader-wrapper small active">
 <div class="spinner-layer spinner-green-only">
@@ -86,10 +99,20 @@ submitButton.disabled = true;
   var age = parseInt(deathRecordForm["age"].value);
   // deathRecordFormError.innerHTML="";
 // console.log(sex)
-
+reason = reason.toLowerCase()
+resident = resident.toLowerCase()
 
 var firestore = firebase.firestore()
-
+var data_reason = await firestore.collection("reasons").where("reason","==",reason).get()
+var data_resident = await firestore.collection("residents").where("resident","==",resident).get()
+if(data_reason.docs.length == 0)
+{
+var data = await firestore.collection("reasons").add({reason})
+}
+if(data_resident.docs.length == 0)
+{
+var data = await firestore.collection("residents").add({resident})
+}
   //Add the death record details
 firestore.collection('death_records').add({
     title,name,relation,relative_name,from,to,time,reason,resident,date,age,sex,

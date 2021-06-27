@@ -38,6 +38,7 @@ auth.onAuthStateChanged(
         signup.style.display = "none";
         chart.style.display = "block";
         deathRecordWrapper.style.display = "block";
+
         await initChart()
         await initDeathRecord()
         firestore.collection("users").doc(user.uid).get().then((data)=>
